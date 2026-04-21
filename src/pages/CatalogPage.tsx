@@ -12,6 +12,8 @@ export default function CatalogPage({ favorites, toggleFavorite, searchQuery, se
     const matchSearch = !searchQuery || 
       p.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.translation.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (p.russianEquivalent?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
       p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchTheme && matchSearch;
   });

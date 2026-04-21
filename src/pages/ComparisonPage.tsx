@@ -3,7 +3,7 @@ import { PageProps } from '../App';
 import { proverbs } from '../data/proverbs';
 import Icon from '@/components/ui/icon';
 
-const withComparison = proverbs.filter(p => p.englishText);
+const withComparison = proverbs.filter(p => p.russianEquivalent);
 
 export default function ComparisonPage({ favorites, toggleFavorite }: PageProps) {
   const [active, setActive] = useState<string>(withComparison[0]?.id ?? '');
@@ -19,13 +19,13 @@ export default function ComparisonPage({ favorites, toggleFavorite }: PageProps)
           <span className="font-mono text-xs text-gold/60 uppercase tracking-[0.25em]">Кросс-культурный анализ</span>
         </div>
         <h1 className="font-display text-5xl font-light text-foreground mb-2">
-          Русские и английские
+          English & Russian
         </h1>
         <h1 className="font-display text-5xl font-light text-gold mb-4">
           параллели
         </h1>
         <p className="font-body text-muted-foreground text-sm max-w-lg">
-          Пословицы разных народов часто выражают одну мысль — посмотрите, как схожа человеческая мудрость
+          Одна мудрость, два языка — сравните, как разные народы выражают одни и те же истины
         </p>
       </section>
 
@@ -47,14 +47,14 @@ export default function ComparisonPage({ favorites, toggleFavorite }: PageProps)
               style={{ animationDelay: `${i * 0.04}s` }}
             >
               <p className={`font-display italic text-sm leading-snug ${active === proverb.id ? 'text-foreground' : 'text-foreground/70'}`}>
-                «{proverb.text}»
+                "{proverb.text}"
               </p>
               <div className="flex items-center gap-2 mt-1.5">
-                <span className="text-[10px]">🇷🇺</span>
-                <Icon name="ArrowRight" size={10} className="text-muted-foreground/30" />
                 <span className="text-[10px]">🇬🇧</span>
+                <Icon name="ArrowRight" size={10} className="text-muted-foreground/30" />
+                <span className="text-[10px]">🇷🇺</span>
                 <span className="font-body text-[10px] text-muted-foreground/40 truncate flex-1">
-                  {proverb.englishText}
+                  {proverb.russianEquivalent}
                 </span>
               </div>
             </button>
@@ -65,14 +65,14 @@ export default function ComparisonPage({ favorites, toggleFavorite }: PageProps)
         <div className="lg:col-span-2">
           {current && (
             <div className="animate-fade-in" key={current.id}>
-              {/* Russian */}
+              {/* English — original */}
               <div className="border border-border bg-card rounded-sm p-8 mb-4 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-gold/60 to-gold/10" />
                 <div className="pl-4">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="text-2xl">🇷🇺</span>
+                    <span className="text-2xl">🇬🇧</span>
                     <div>
-                      <div className="font-mono text-[10px] text-gold/50 uppercase tracking-widest">Русская пословица</div>
+                      <div className="font-mono text-[10px] text-gold/50 uppercase tracking-widest">Английская пословица</div>
                       <div className="font-mono text-[10px] text-muted-foreground/40">{current.century} век</div>
                     </div>
                     <div className="ml-auto">
@@ -84,9 +84,10 @@ export default function ComparisonPage({ favorites, toggleFavorite }: PageProps)
                       </button>
                     </div>
                   </div>
-                  <blockquote className="font-display italic text-2xl font-light text-foreground leading-tight mb-4">
-                    «{current.text}»
+                  <blockquote className="font-display italic text-2xl font-light text-foreground leading-tight mb-1">
+                    "{current.text}"
                   </blockquote>
+                  <p className="font-body text-sm text-gold/70 italic mb-4">{current.translation}</p>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed">
                     {current.meaning}
                   </p>
@@ -103,36 +104,30 @@ export default function ComparisonPage({ favorites, toggleFavorite }: PageProps)
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
               </div>
 
-              {/* English */}
+              {/* Russian equivalent */}
               <div className="border border-border bg-card rounded-sm p-8 mt-4 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-400/40 to-blue-400/10" />
+                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-400/40 to-red-400/10" />
                 <div className="pl-4">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="text-2xl">🇬🇧</span>
+                    <span className="text-2xl">🇷🇺</span>
                     <div>
-                      <div className="font-mono text-[10px] text-blue-400/60 uppercase tracking-widest">Английская пословица</div>
+                      <div className="font-mono text-[10px] text-red-400/60 uppercase tracking-widest">Русский аналог</div>
                     </div>
                   </div>
-                  <blockquote className="font-display italic text-2xl font-light text-foreground/80 leading-tight mb-4">
-                    «{current.englishText}»
+                  <blockquote className="font-display italic text-2xl font-light text-foreground/80 leading-tight">
+                    «{current.russianEquivalent}»
                   </blockquote>
-                  {current.englishEquivalent && (
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                      {current.englishEquivalent}
-                    </p>
-                  )}
                 </div>
               </div>
 
-              {/* Analysis */}
+              {/* History note */}
               <div className="mt-4 border border-dashed border-border rounded-sm p-5">
                 <div className="flex items-start gap-3">
                   <Icon name="Lightbulb" size={14} className="text-gold/50 mt-0.5 shrink-0" />
                   <div>
-                    <div className="font-mono text-[10px] text-gold/50 uppercase tracking-widest mb-2">Общая идея</div>
+                    <div className="font-mono text-[10px] text-gold/50 uppercase tracking-widest mb-2">История происхождения</div>
                     <p className="font-body text-sm text-muted-foreground/70 leading-relaxed">
-                      Обе пословицы выражают схожую мудрость, несмотря на разное происхождение. 
-                      Это говорит об универсальности человеческого опыта и общих ценностях разных культур.
+                      {current.origin}
                     </p>
                   </div>
                 </div>
