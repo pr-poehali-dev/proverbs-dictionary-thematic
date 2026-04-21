@@ -1,28 +1,55 @@
+import { useState } from 'react';
+import HomePage from './pages/HomePage';
+import CatalogPage from './pages/CatalogPage';
+import HistoryPage from './pages/HistoryPage';
+import ComparisonPage from './pages/ComparisonPage';
+import FavoritesPage from './pages/FavoritesPage';
+import Navigation from './components/Navigation';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+export type Page = 'home' | 'catalog' | 'history' | 'comparison' | 'favorites';
 
-const queryClient = new QueryClient();
+export type PageProps = {
+  navigate: (page: Page) => void;
+  favorites: string[];
+  toggleFavorite: (id: string) => void;
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+};
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+export default function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-export default App;
+  const toggleFavorite = (id: string) => {
+    setFavorites(prev =>
+      prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+    );
+  };
+
+  const navigate = (page: Page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const pageProps: PageProps = {
+    navigate,
+    favorites,
+    toggleFavorite,
+    searchQuery,
+    setSearchQuery,
+  };
+
+  return (
+    <div className="min-h-screen bg-background grain-overlay">
+      <Navigation currentPage={currentPage} navigate={navigate} favoritesCount={favorites.length} />
+      <main>
+        {currentPage === 'home' && <HomePage {...pageProps} />}
+        {currentPage === 'catalog' && <CatalogPage {...pageProps} />}
+        {currentPage === 'history' && <HistoryPage {...pageProps} />}
+        {currentPage === 'comparison' && <ComparisonPage {...pageProps} />}
+        {currentPage === 'favorites' && <FavoritesPage {...pageProps} />}
+      </main>
+    </div>
+  );
+}
