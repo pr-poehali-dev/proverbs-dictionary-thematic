@@ -24,17 +24,17 @@ export default function HomePage({ navigate, favorites, toggleFavorite, searchQu
       <section className="pt-20 pb-16 animate-slide-up">
         <div className="flex items-center gap-3 mb-6">
           <div className="h-px w-12 bg-gold/40" />
-          <span className="font-mono text-xs text-gold/60 uppercase tracking-[0.25em]">Словарь пословиц</span>
+          <span className="font-mono text-xs text-gold/60 uppercase tracking-[0.25em]">English Proverbs Dictionary</span>
         </div>
 
         <h1 className="font-display text-6xl md:text-8xl font-light text-foreground leading-[0.95] mb-2">
-          Народная
+          English
         </h1>
         <h1 className="font-display text-6xl md:text-8xl font-light text-gold leading-[0.95] mb-8">
-          мудрость
+          Proverbs
         </h1>
         <p className="font-body text-muted-foreground text-lg max-w-xl leading-relaxed">
-          Коллекция русских пословиц с историческим контекстом, сравнением с английскими аналогами и возможностью сохранить любимые.
+          Коллекция английских пословиц с русским переводом, историей происхождения и русскими аналогами — сохраняйте любимые для изучения.
         </p>
 
         {/* Search */}
