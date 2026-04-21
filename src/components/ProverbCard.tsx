@@ -14,7 +14,7 @@ export default function ProverbCard({ proverb, isFavorite, onToggleFavorite, var
       <div className="group border border-border hover:border-gold/40 rounded-sm p-4 transition-all duration-300 bg-card hover:bg-card/80">
         <div className="flex items-start justify-between gap-3">
           <p className="font-display italic text-lg text-foreground/90 leading-snug flex-1">
-            «{proverb.text}»
+            "{proverb.text}"
           </p>
           <button
             onClick={() => onToggleFavorite(proverb.id)}
@@ -23,7 +23,8 @@ export default function ProverbCard({ proverb, isFavorite, onToggleFavorite, var
             <Icon name={isFavorite ? 'Bookmark' : 'BookmarkPlus'} size={16} fallback="Bookmark" />
           </button>
         </div>
-        <p className="mt-2 text-xs text-muted-foreground font-body line-clamp-2">{proverb.meaning}</p>
+        <p className="mt-1 text-xs text-gold/60 font-body italic">{proverb.translation}</p>
+        <p className="mt-1.5 text-xs text-muted-foreground font-body line-clamp-2">{proverb.meaning}</p>
         <div className="mt-3 flex items-center gap-3">
           <span className="font-mono text-[10px] text-gold/60 uppercase tracking-widest">{proverb.century} в.</span>
           {proverb.tags.slice(0, 2).map(tag => (

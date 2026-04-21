@@ -90,19 +90,21 @@ export default function HomePage({ navigate, favorites, toggleFavorite, searchQu
           <div className="absolute top-0 right-0 w-32 h-32 bg-gold/3 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
           <div className="flex items-start justify-between gap-4 relative">
             <div className="flex-1">
-              <blockquote className="font-display italic text-3xl font-light text-foreground leading-tight mb-4">
-                «{today.text}»
+              <blockquote className="font-display italic text-3xl font-light text-foreground leading-tight mb-1">
+                "{today.text}"
               </blockquote>
+              <p className="font-body text-sm text-gold/70 italic mb-4">{today.translation}</p>
               <p className="font-body text-muted-foreground text-sm leading-relaxed max-w-2xl">
                 {today.meaning}
               </p>
               <div className="flex items-center gap-4 mt-5">
                 <span className="font-mono text-xs text-gold/60 uppercase tracking-widest">{today.century} век</span>
-                <div className="w-px h-3 bg-border" />
-                {today.englishText && (
-                  <span className="font-body text-xs text-muted-foreground/60 italic">
-                    «{today.englishText}»
-                  </span>
+                {today.russianEquivalent && (
+                  <>
+                    <div className="w-px h-3 bg-border" />
+                    <span className="text-xs">🇷🇺</span>
+                    <span className="font-display italic text-xs text-muted-foreground/60">«{today.russianEquivalent}»</span>
+                  </>
                 )}
               </div>
             </div>
